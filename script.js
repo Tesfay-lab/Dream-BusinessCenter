@@ -5,7 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     // ==================== DOM ELEMENTS ====================
     const header = document.getElementById('header');
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -45,22 +45,22 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         const targetSection = document.querySelector(targetId);
-
+        
         if (targetSection) {
             const headerHeight = header.offsetHeight;
             const targetPosition = targetSection.offsetTop - headerHeight;
-
+            
             window.scrollTo({
                 top: targetPosition,
                 behavior: 'smooth'
             });
-
+            
             // Close mobile menu if open
             if (navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 mobileMenuToggle.classList.remove('active');
             }
-
+            
             // Update active nav link
             updateActiveNavLink(targetId);
         }
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleMobileMenu() {
         navLinks.classList.toggle('active');
         mobileMenuToggle.classList.toggle('active');
-
+        
         // Prevent body scroll when menu is open
         document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
     }
@@ -154,17 +154,17 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function filterPortfolio(e) {
         const filterValue = e.target.dataset.filter;
-
+        
         // Update active button state
         filterBtns.forEach(btn => btn.classList.remove('active'));
         e.target.classList.add('active');
-
+        
         // Filter items
         const portfolioItems = portfolioGrid.querySelectorAll('.portfolio-item');
-
+        
         portfolioItems.forEach(item => {
             const category = item.dataset.category;
-
+            
             if (filterValue === 'all' || category === filterValue) {
                 item.classList.remove('hidden');
                 // Small delay for stagger effect
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Reveals elements as they scroll into view using IntersectionObserver
      */
     const revealElements = document.querySelectorAll('.service-card, .portfolio-item, .section-header');
-
+    
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -216,23 +216,23 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-
+        
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData.entries());
-
+        
         // Basic validation
         if (!data.name || !data.email || !data.service || !data.message) {
             showFormMessage('Please fill in all fields.', 'error');
             return;
         }
-
+        
         // Email validation regex
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
             showFormMessage('Please enter a valid email address.', 'error');
             return;
         }
-
+        
         // Simulate form submission success
         showFormMessage('Thank you! Your message has been sent successfully. We will contact you soon.', 'success');
         contactForm.reset();
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Remove existing message if any
         const existingMsg = contactForm.querySelector('.form-message');
         if (existingMsg) existingMsg.remove();
-
+        
         const msgEl = document.createElement('div');
         msgEl.className = `form-message form-message-${type}`;
         msgEl.textContent = message;
@@ -262,9 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 : 'background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);'
             }
         `;
-
+        
         contactForm.appendChild(msgEl);
-
+        
         // Auto-remove after 5 seconds
         setTimeout(() => {
             msgEl.style.opacity = '0';
@@ -279,13 +279,13 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const heroShapes = document.querySelectorAll('.shape');
     const hero = document.querySelector('.hero');
-
+    
     // Only apply on non-touch devices
     if (!window.matchMedia('(pointer: coarse)').matches) {
         hero.addEventListener('mousemove', (e) => {
             const x = (e.clientX / window.innerWidth - 0.5) * 20;
             const y = (e.clientY / window.innerHeight - 0.5) * 20;
-
+            
             heroShapes.forEach((shape, index) => {
                 const speed = (index + 1) * 0.5;
                 shape.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
@@ -296,6 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==================== INITIALIZATION ====================
     // Trigger initial header state check
     handleHeaderScroll();
-
+    
     console.log('Dream Business Center website initialized successfully.');
 });
